@@ -26,15 +26,15 @@
 
 ## Phase 0: 前置检查
 
-在进入循环前必须全部通过：
+在进入循环前必须全部通过（全 pass 才能进入循环，任一 fail 立即停止）：
 
 ```
-1. git 仓库存在？→ git rev-parse --git-dir
-2. 工作区干净？→ git status --porcelain
-3. Scope 路径存在？
-4. Verify 命令可执行？
-5. Guard 命令可执行？（如果配置了）
-6. 相关文件已读取？（当前状态）
+1. git 仓库存在？→ git rev-parse --git-dir          [判定: exit code 0 = pass]
+2. 工作区干净？→ git status --porcelain               [判定: 空输出 = pass]
+3. Scope 路径存在？                                     [判定: ls 能列出 = pass]
+4. Verify 命令可执行？                                  [判定: 能运行并输出数值 = pass]
+5. Guard 命令可执行？（如果配置了）                     [判定: 能运行并输出 pass/fail = pass]
+6. 相关文件已读取？（当前状态）                         [判定: 文件内容在上下文中 = pass]
 ```
 
 如果任何检查失败：停止，报错，等用户修复。
@@ -229,13 +229,22 @@ iteration  commit   metric  delta   guard  status    description
 
 ---
 
-## Phase 8.5: 健康检查
+## Phase 8.5: Health Check（健康检查）
 
 每 10 次迭代或检测到异常时：
-- 磁盘空间
-- git 状态完整性
-- Verify 命令是否仍然可用
-- 结果日志一致性
+
+```
+1. 磁盘空间 → df -h（剩余 < 1GB 触发警告）
+2. git 状态完整性 → git fsck（无 dangling objects = healthy）
+3. Verify 命令是否仍然可用（跑一次确认能输出数值）
+4. 结果日志一致性 → 行数 = 迭代次数 + 1（含 header）
+```
+
+**Health 判定规则：**
+- 全部 healthy → 继续
+- 任一 unhealthy → 降级为 warning，记录但不阻断
+- git 损坏 → 硬阻断，停止循环
+- 磁盘 < 500MB → 硬阻断，停止循环
 
 ---
 
