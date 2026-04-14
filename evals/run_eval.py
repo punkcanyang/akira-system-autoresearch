@@ -72,12 +72,18 @@ def eval_composability():
 
 def eval_structure_completeness():
     """架构完整度 (15%): 目录结构、frontmatter、refs"""
+    # scripts 需要目录存在 + 至少一个可执行文件
+    scripts_dir = SKILL_DIR / "scripts"
+    scripts_ok = scripts_dir.is_dir() and any(
+        (scripts_dir / f).is_file() and (f.endswith('.py') or f.endswith('.sh'))
+        for f in os.listdir(scripts_dir)
+    )
     checks = {
         "has_skill_md": check_file("SKILL.md"),
         "has_readme": check_file("README.md"),
         "has_references": check_file("references"),
         "has_evals": check_file("evals"),
-        "has_scripts": check_file("scripts"),
+        "has_scripts": scripts_ok,
         "has_frontmatter": check_content("SKILL.md", ["---", "name:", "version:", "author:"]),
     }
     return sum(checks.values()) / len(checks) * 100
