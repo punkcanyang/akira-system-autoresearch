@@ -133,20 +133,22 @@ def main():
     weights = {
         "architecture_coverage": 0.20,
         "protocol_completeness": 0.15,
-        "boundary_handling": 0.10,
-        "composability": 0.10,
+        "boundary_handling": 0.12,
+        "composability": 0.12,
         "structure_completeness": 0.15,
-        "doc_quality": 0.10,
+        "doc_quality": 0.11,
         "spec_compliance": 0.10,
         "reproducibility": 0.05,
     }
 
     total = sum(results[k] * weights[k] for k in results)
+    min_score = min(results.values())
+    weakest_name = min(results, key=results.get) if min_score < 100.0 else "none"
 
     output = {
         "dimensions": {k: round(v, 1) for k, v in results.items()},
         "total_score": round(total, 1),
-        "weakest": min(results, key=results.get),
+        "weakest": weakest_name,
     }
 
     print(json.dumps(output, ensure_ascii=False, indent=2))
