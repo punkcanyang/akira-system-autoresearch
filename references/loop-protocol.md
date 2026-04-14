@@ -151,6 +151,17 @@ git commit -m "experiment(<scope>): <改了什么和为什么>"
 
 **超时规则：** 如果验证耗时 > 基线耗时的 2 倍，视为失败迭代。
 
+### 验证失败处理
+
+| 情况 | 处理 |
+|------|------|
+| 命令返回非零 exit code | 检查是否本次改动导致。如果是 → 回滚（discard）。如果 verify 命令本身坏了 → 硬阻断，修复 verify |
+| 命令返回零但输出为空 | 3 次重试（可能的 flaky）。仍无输出 → 回滚（discard），记录 `empty_verify` |
+| 输出无法解析为数值 | 回滚，记录 `unparseable_verify`。检查 verify 命令是否兼容当前 scope |
+| 超时（> 2× baseline） | 回滚（discard），记录 `timeout`。改动可能引入了性能退化 |
+
+**关键原则：** 验证失败时永远不能进入 keep 判决。宁可 discard 一个可能好的改动，也不能带着不确定的指标继续。
+
 ---
 
 ## Phase 6.5: 守卫
@@ -260,6 +271,34 @@ iteration  commit   metric  delta   guard  status    description
 - keep/discard/crash 计数
 - 最近几次状态
 - 下一步可能方向
+
+## Context Drift 防护
+
+长迭代中，agent 可能逐渐偏离原始协议（偏离 scope、忘记约束、混淆维度）。需要定期重锚。
+
+### 触发条件
+
+| 信号 | 动作 |
+|------|------|
+| 每 5 次迭代 | 轻量重锚：重新读取 SKILL.md 核心法则，确认目标和 scope 不变 |
+| 检测到 scope 跨越 | 立即停止：如果发现改动了 scope 外的文件，回滚到上次安全状态，重读 scope 定义 |
+| 指标方向反转 | 审查：是否在优化错误的指标？重新确认 Metric 定义 |
+| 连续 2 次 PIVOT | 强制重锚：重新读取所有文件（SKILL.md + references + 历史结果），检查是否有被忽略的约束 |
+
+### 重锚协议
+
+```
+1. 暂停当前迭代
+2. 重新读取 SKILL.md 中的 "必需输入" 部分
+3. 确认：Goal 仍然是 __？Scope 仍然是 __？Metric 仍然是 __？
+4. git diff --stat HEAD~5 — 最近 5 次改动的范围是否合理？
+5. 如果发现漂移：回滚漂移部分，记录 lesson
+6. 恢复迭代
+```
+
+**关键原则：** 重锚不丢人。自动重锚是健康系统的表现，不是故障。
+
+---
 
 ## 硬阻断器（立即停止）
 
