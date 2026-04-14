@@ -20,6 +20,66 @@
 | **reason** | 对抗精炼 | 主观质量评估（视角、语气、craft） |
 | **scenario** | 场景探索 | 发现边界、失败模式、盲区 |
 
+## 使用方式
+
+### 触发方式
+
+直接对我说自然语言即可，我会自动识别并加载本 skill：
+
+```
+# 纯 loop 迭代（默认）
+迭代 akira-person-mark-fisher
+修复 akira-lsd 的后遗残留描述
+
+# reason 对抗精炼
+用 reason 精炼 Ivan Illich skill
+reason 模式评估汪曾祺
+
+# scenario 场景探索
+探索 Mark Fisher 在分析零工经济时会怎么失败
+场景测试 ketamine skill 的回收流程
+
+# 级联（改一个，联动相关）
+迭代 akira-system-core（会自动检查哪些 skill 需要同步）
+```
+
+### 运行流程（loop 模式示例）
+
+```
+Phase 0: 检查 git 状态、scope 存在
+Phase 1: 读当前 skill 内容和历史
+Phase 2: 跑 eval 建立 baseline
+Phase 3: 选一个改进假设
+Phase 4: 一个原子改动
+Phase 5: git commit（可回滚）
+Phase 6: 再跑 eval 看有没有变好
+Phase 7: 变好就留，变差就 revert
+Phase 8: 记录教训
+Phase 9: 循环
+```
+
+关键约束：
+- **每轮只改一件事** — 宁可多轮，不要混改
+- **必须 git commit** — 不 commit 不继续
+- **不可 skip Eval** — 即使看着"明显对"也要跑
+- **卡住就 PIVOT** — 两轮无改善就换方向
+
+### Eval 维度概览
+
+**系统 skill 专属（55%）：**
+- 架构覆盖度 (20%) — 子系统、模式、接口是否齐全
+- 协议完整性 (15%) — 每阶段有明确输入/输出/判定规则
+- 边界处理 (10%) — 异常、错误、中断恢复
+- 可组合性 (10%) — 能否与其他系统 skill 协同
+
+**通用维度（45%）：**
+- 结构完整度 (15%) — 目录结构、frontmatter、refs
+- 文档质量 (10%) — README 清晰度、安装说明
+- 规范遵从度 (10%) — hermes-skill-authoring-standard
+- 可复现性 (5%) — 其他 agent 能否按说明使用
+
+完整维度定义见 `references/eval-dimensions.md`。
+
 ## 安装
 
 ### 作为 Hermes Skill
@@ -28,6 +88,11 @@
 # 克隆或复制到 skills 目录
 cp -r akira-system-autoresearch ~/.hermes/skills/autonomous-ai-agents/
 ```
+
+依赖：
+- git（用于版本追踪和回滚）
+- Hermes Agent（自然语言触发）
+- 其他 skill 的 eval 脚本（如有）
 
 ### 跨 Agent 适配
 
