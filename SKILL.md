@@ -185,6 +185,16 @@ AKIRA skills 按类型有不同的评估标准。详见 `references/eval-dimensi
 
 级联检查是标记需要 review，不是自动修改。
 
+## Eval 构建经验教训
+
+在实际迭代中发现的 eval 反模式（总结自 Mark Fisher skill 迭代 + 自迭代）：
+
+1. **`check_content` 要求全匹配容易误杀** — 一个检查列出 4 个关键词，只要 1 个不匹配就降分。应区分 AND（结构性检查）和 OR（特征检测），新增 `check_any` 辅助函数
+2. **简繁体中文错位** — SKILL.md 用繁体，eval 用简体关键词，永远匹配不上。Person skills 的 eval 必须用与目标文件一致的文字系统
+3. **三反引号检查不可靠** — SKILL.md 不一定用 markdown 代码块。应检查内容特征（是否有人称、场景、引用等），而不是格式标记
+4. **权重必须归一化** — 人工指定的权重容易 sum ≠ 1.0，导致天花板不是 100。建完权重后必须验证 `sum(weights) == 1.0`
+5. **子串匹配对 Unicode 不可靠** — `.lower()` 不处理 CJK 字符。比较中文字符串时不要依赖 case-insensitive 匹配，直接精确匹配
+
 ## 元改进
 
 工具自身也在迭代范围内：
