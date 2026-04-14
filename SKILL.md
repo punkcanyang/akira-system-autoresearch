@@ -213,3 +213,19 @@ Verify: python3 meta_eval.py 2>&1 | grep 'correlation' | awk '{print $2}'
 - 用户 review 后才合并
 - 破坏性操作（删除文件、大规模重写）必须在 Phase 0 预先批准
 - 回滚用 `git revert`（保留历史），不用 `git reset --hard`（除非隔离分支）
+
+## 实战经验
+
+### 前置检查
+- **git repo 不存在时**：先 `git init`，再 `git config user.email/name`，否则 commit 会失败
+- **eval 脚本先验证**：跑一轮 eval 时，确认 eval 脚本本身逻辑正确（检查 frontmatter 提取、关键词匹配范围），不要盲目信任自动化分数
+
+### 模式选择
+- **系统级 skills**（Core、EVA、autoresearch 自身）→ loop 模式，聚焦架构/协议/完整性
+- **人物视角 skills**（akira-person-*）→ reason 模式评估输出质量，loop 模式补结构
+- **药物 skills** → loop 模式，维度关注机制完整性/回收框架/残留描述
+
+### 有效的迭代模式
+- 一次只改一个维度（如"补边界描述"），不要试图一轮解决所有问题
+- 先改弱项，每轮重新 eval 看有没有新弱点暴露
+- 当所有维度都 100 时，考虑加深 eval 精度（拆子维度、加内容质量检查），而不是停止
