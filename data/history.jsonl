@@ -1,0 +1,2 @@
+{"round":3,"mode":"run","dimensions":{"architecture_coverage":100.0,"protocol_completeness":100.0,"boundary_handling":87.5,"composability":91.7,"structure_completeness":83.3,"doc_quality":88.9,"spec_compliance":100.0,"reproducibility":100.0},"total_score":85.1}
+{"round":4,"mode":"run","dimensions":{"architecture_coverage":100.0,"protocol_completeness":100.0,"boundary_handling":87.5,"composability":91.7,"structure_completeness":100.0,"doc_quality":88.9,"spec_compliance":100.0,"reproducibility":100.0},"total_score":91.8}

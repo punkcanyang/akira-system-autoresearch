@@ -1,0 +1,114 @@
+[
+  {
+    "round": 0,
+    "composite": 81.3,
+    "dimensions": {
+      "architecture_coverage": 100.0,
+      "protocol_completeness": 79.2,
+      "boundary_handling": 62.5,
+      "composability": 66.7,
+      "structure_completeness": 62.5,
+      "doc_quality": 77.8,
+      "spec_compliance": 100.0,
+      "reproducibility": 50.0
+    },
+    "weakest": "boundary_handling",
+    "changes": "initial: v0.1.0"
+  },
+  {
+    "round": 1,
+    "composite": 83.0,
+    "dimensions": {
+      "architecture_coverage": 100.0,
+      "protocol_completeness": 79.2,
+      "boundary_handling": 75.0,
+      "composability": 66.7,
+      "structure_completeness": 75.0,
+      "doc_quality": 77.8,
+      "spec_compliance": 100.0,
+      "reproducibility": 75.0
+    },
+    "weakest": "doc_quality",
+    "changes": "\u8865\u9a8c\u8bc1\u5931\u8d25\u5904\u7406 + context drift"
+  },
+  {
+    "round": 2,
+    "composite": 85.1,
+    "dimensions": {
+      "architecture_coverage": 100.0,
+      "protocol_completeness": 79.2,
+      "boundary_handling": 75.0,
+      "composability": 66.7,
+      "structure_completeness": 75.0,
+      "doc_quality": 77.8,
+      "spec_compliance": 100.0,
+      "reproducibility": 100.0
+    },
+    "weakest": "protocol_completeness",
+    "changes": "eval \u4fee\u6b63\u5b50\u4e32\u5339\u914d"
+  },
+  {
+    "round": 3,
+    "composite": 89.3,
+    "dimensions": {
+      "architecture_coverage": 100.0,
+      "protocol_completeness": 100.0,
+      "boundary_handling": 87.5,
+      "composability": 91.7,
+      "structure_completeness": 83.3,
+      "doc_quality": 88.9,
+      "spec_compliance": 100.0,
+      "reproducibility": 100.0
+    },
+    "weakest": "structure_completeness",
+    "changes": "Phase 0 \u52a0\u5224\u5b9a\u89c4\u5219, Phase 8.5 \u5c55\u5f00 health check"
+  },
+  {
+    "round": 4,
+    "composite": 91.8,
+    "dimensions": {
+      "architecture_coverage": 100.0,
+      "protocol_completeness": 100.0,
+      "boundary_handling": 87.5,
+      "composability": 91.7,
+      "structure_completeness": 100.0,
+      "doc_quality": 88.9,
+      "spec_compliance": 100.0,
+      "reproducibility": 100.0
+    },
+    "weakest": "boundary_handling",
+    "changes": "scripts/run.py CLI + fix eval structure check"
+  },
+  {
+    "round": 5,
+    "composite": 93.1,
+    "dimensions": {
+      "architecture_coverage": 100.0,
+      "protocol_completeness": 100.0,
+      "boundary_handling": 100.0,
+      "composability": 91.7,
+      "structure_completeness": 100.0,
+      "doc_quality": 88.9,
+      "spec_compliance": 100.0,
+      "reproducibility": 100.0
+    },
+    "weakest": "doc_quality",
+    "changes": "eval \u4fee\u6b63 boundary_handling \u5339\u914d + \u8865 stall \u786c\u963b\u65ad"
+  },
+  {
+    "round": 6,
+    "composite": 62.6,
+    "dimensions": {
+      "architecture_coverage": 40.0,
+      "protocol_completeness": 80.0,
+      "boundary_handling": 25.0,
+      "composability": 83.3,
+      "structure_completeness": 100.0,
+      "doc_quality": 54.5,
+      "spec_compliance": 80.0,
+      "reproducibility": 50.0
+    },
+    "weakest": "boundary_handling",
+    "changes": "README: \u8865\u8bbe\u8ba1\u51b3\u7b56 + \u8de8 agent \u9002\u914d + \u7248\u6743"
+  }
+]

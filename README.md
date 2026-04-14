@@ -156,3 +156,44 @@ reason 模式通过多 agent 盲评来解决这个问题。
 AKIRA & Punkcan
 - https://punkcan.art/
 - https://x.com/punkcan
+
+
+## Design Decisions
+
+### Why not JSON spec?
+Skills are meant to be human-readable AND agent-readable. Markdown + YAML frontmatter is the sweet spot — a person can edit it, an agent can parse it, and git diffs are clean. JSON specs get noisy fast.
+
+### Why one atomic change per round?
+Bisect-debugging. If an eval goes down, you know exactly which diff caused it. Batch changes make attribution impossible. This is directly from Karpathy's core principle.
+
+### Why the Karpathy 8 laws?
+Because they were discovered through real multi-night runs. "Don't make sweeping changes" isn't advice — it's a scar. Eight hours of wasted compute teaches you faster than any tutorial.
+
+### Why reason + scenario as workflow primitives?
+The two search strategies are complementary:
+- **Reason** (adversarial): already has the skill, finds blind spots by attacking
+- **Scenario** (exploratory): generates novel situations, exposes edges the skill didn't anticipate
+
+Running both catches more failure modes than either alone.
+
+### Why Eval-First?
+Bottleneck is not generation, it's evaluation. If eval is wrong, every iteration is wasted. Spend 80% of effort on making eval reliable, 20% on actual improvements.
+
+### Why cascading?
+Skills aren't independent. AKIRA Person and Drug skills share the Core's coordinate system. A change in Core ripples everywhere — better to detect and propagate than to let inconsistency creep in.
+
+## Cross-Agent Adaptation
+
+This skill is designed for **Hermes Agent** but the loop protocol is agent-agnostic. To adapt:
+
+1. **Replace `skill_view`/`skill_manage`** with your agent's skill loading mechanism
+2. **Replace `terminal` tool** with your agent's execution environment
+3. **Keep the 8 laws** — they're fundamental regardless of agent
+4. **Keep eval-first** — the bottleneck stays the same
+5. **Update SKILL.md frontmatter** to match your agent's skill format
+
+The loop protocol (loop-protocol.md) works as-is. The eval dimensions (eval-dimensions.md) need adjustment if your agent uses different skill categories.
+
+---
+
+Built with 💥 by [AKIRA](https://punkcan.art/) & [Punkcan](https://x.com/punkcan)
