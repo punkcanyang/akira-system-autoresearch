@@ -42,9 +42,9 @@ def eval_architecture_coverage():
 def eval_protocol_completeness():
     """协议完整性 (15%): 每阶段有明确输入/输出/判定规则"""
     checks = {
-        "has_input_output": check_content("references/loop-protocol.md", ["输入", "输出", "判定"]),
-        "has_decision_logic": check_content("references/loop-protocol.md", ["保留", "丢弃", "改进"]),
-        "has_pivot_recovery": check_content("references/loop-protocol.md", ["pivot", "refine", "卡住"]),
+        "has_input_output": check_content("references/loop-protocol.md", ["必需输入", "输出", "判定"]),
+        "has_decision_logic": check_content("references/loop-protocol.md", ["保留", "丢弃", "回滚"]),
+        "has_pivot_recovery": check_content("references/loop-protocol.md", ["PIVOT", "REFINE", "卡住恢复"]),
         "has_health_check": check_content("references/loop-protocol.md", ["健康检查", "health"]),
     }
     return sum(checks.values()) / len(checks) * 100
@@ -55,7 +55,7 @@ def eval_boundary_handling():
         "has_rollback": check_content("SKILL.md", ["revert", "回滚"]),
         "has_guard": check_content("SKILL.md", ["guard", "守卫"]),
         "has_no_verify_stall": check_content("references/loop-protocol.md", ["没有验证", "无法"]),
-        "has_context_drift": check_content("references/loop-protocol.md", ["context drift", "协议重锚", "重锚"]),
+        "has_context_drift": check_content("references/loop-protocol.md", ["context drift", "重锚", "Context Drift"]),
     }
     return sum(checks.values()) / len(checks) * 100
 
