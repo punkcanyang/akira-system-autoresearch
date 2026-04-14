@@ -124,6 +124,22 @@ Phase 9: 循环 → 回到 Phase 1
 
 详细协议见 `references/loop-protocol.md`。
 
+### 卡住恢复
+
+连续 discard → REVERT / PIVOT / REFINE，详见 `references/loop-protocol.md`。
+
+### Context Drift 防护
+
+长迭代中定期重锚，详见 `references/loop-protocol.md`。
+
+## 工作流扩展
+
+| 文件 | 用途 |
+|------|------|
+| `references/reason-workflow.md` | 对抗精炼：多 agent 盲评收敛 |
+| `references/scenario-workflow.md` | 场景探索：系统性发现边界和失败模式 |
+| `references/cascade-protocol.md` | 级联更新：改一个 skill → 检查相关 skill 是否需要同步 |
+
 ## 评估维度（AKIRA 专用）
 
 AKIRA skills 按类型有不同的评估标准。详见 `references/eval-dimensions.md`。
