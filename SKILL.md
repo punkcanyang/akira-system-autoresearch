@@ -140,6 +140,15 @@ Phase 9: 循环 → 回到 Phase 1
 | `references/scenario-workflow.md` | 场景探索：系统性发现边界和失败模式 |
 | `references/cascade-protocol.md` | 级联更新：改一个 skill → 检查相关 skill 是否需要同步 |
 
+## 协同关系
+
+本 skill 与以下 AKIRA 系统 skill 协同：
+
+- **akira-system-core** — 提供基线架构、坐标轴、维度进入/现实回收框架。当 Core 更新时，本 skill 的 eval 维度需要同步调整。
+- **akira-system-eva** — EVA 负责生成人物/视角 skills。迭代 person skill 时，本 skill 的 loop 模式负责优化，EVA 负责骨架重建。
+- **akira-system-drug-skill-lab** — Drug-Skill-Lab 负责药物资料的 intake 和分流。迭代 drug skill 时，本 skill 提供持续改进机制，Drug-Skill-Lab 定义证据等级和字段映射。
+- **akira-system-skill-design** — 定义多药物/多状态人格偏移系统的分层架构。本 skill 的级联机制依赖 Skill Design 的架构模板来判断哪些 skill 需要同步。
+
 ## 评估维度（AKIRA 专用）
 
 AKIRA skills 按类型有不同的评估标准。详见 `references/eval-dimensions.md`。
