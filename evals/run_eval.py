@@ -54,7 +54,7 @@ def eval_boundary_handling():
     checks = {
         "has_rollback": check_content("SKILL.md", ["revert", "回滚"]),
         "has_guard": check_content("SKILL.md", ["guard", "守卫"]),
-        "has_no_verify_stall": check_content("references/loop-protocol.md", ["没有验证", "无法"]),
+        "has_no_verify_stall": check_content("references/loop-protocol.md", ["验证失败", "无法解析", "空输出"]),
         "has_context_drift": check_content("references/loop-protocol.md", ["context drift", "重锚", "Context Drift"]),
     }
     return sum(checks.values()) / len(checks) * 100

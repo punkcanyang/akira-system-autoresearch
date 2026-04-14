@@ -316,5 +316,6 @@ iteration  commit   metric  delta   guard  status    description
 - git 仓库损坏
 - 磁盘耗尽
 - 同一崩溃连续 5 次无变化
+- Verify 指标连续 5 次无变化（stall）
 - 用户中断
 - 需要未批准的外部操作
